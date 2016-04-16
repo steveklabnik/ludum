@@ -59,8 +59,15 @@ impl Console {
         self.rustbox.print_char(col, row, rustbox::RB_NORMAL, Color::White, Color::Black, c);
     }
 
+    pub fn print_room(&self, description: &str, choices: &[&str]) {
+        self.clear_screen();
+        self.print_description(description);
+        self.print_choices(choices);
+        self.present();
+    }
+
     // oh god this is sloppy
-    pub fn print_description(&self, description: &str) {
+    fn print_description(&self, description: &str) {
         let mut line = 2;
         let mut count = 2;
 
@@ -82,7 +89,7 @@ impl Console {
         }
     }
 
-    pub fn print_choices(&self, choices: &[&str]) {
+    fn print_choices(&self, choices: &[&str]) {
         let mut line = 18;
         self.print(2, line, "What do you do?");
 

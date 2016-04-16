@@ -24,15 +24,11 @@ impl Game {
         let current_room = self.current_room;
         let room = &self.rooms[current_room];
 
-        console.clear_screen();
-        console.print_description(&room.description);
-
         let choices: Vec<&str> = room.choices.iter()
-                                             .map(|c| (&c.0[..]))
+                                             .map(|c| &c.0[..])
                                              .collect();
-        console.print_choices(&choices);
 
-        console.present();
+        console.print_room(&room.description, &choices);
     }
 
     pub fn load() -> Game {

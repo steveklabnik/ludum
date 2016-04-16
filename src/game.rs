@@ -1,4 +1,7 @@
 use console::Console;
+use std::fs::File;
+use std::io::prelude::*;
+use toml;
 
 pub struct Game {
     rooms: Vec<Room>,
@@ -58,40 +61,54 @@ impl Game {
     }
 
     pub fn load() -> Game {
-        let description = "This is the first description.
+        let mut file = File::open("Rooms.toml").unwrap();
+        let mut toml = String::new();
 
-no one can ask me or try to tell me what to Instagram... It's my art... In Roman times the artist would contemplate proportions and colors. Now there is only one important color... Green Tribe changed music forever.
+        file.read_to_string(&mut toml).unwrap();
 
-Called I Miss the Old Kanye I love this new A$AP FERG album!!! Wes That’s all it was Kanye
-";
+        let toml = toml::Parser::new(&toml).parse().unwrap();
 
-        let choices = vec![Choice::new("go to next screen", Action::Goto(1)), Choice::new("leave", Action::Goto(1))];
+        let mut rooms = Vec::new();
 
-        let room1 = Room {
-            description: description.to_string(),
-            choices: choices,
-        };
+        let toml_rooms = toml.get("rooms").unwrap().as_slice().unwrap();
+        for room in toml_rooms {
+            let room = room.as_table().unwrap();
+            let description = room.get("description").unwrap().as_str().unwrap();
 
-        let description = "This is the second description.
+            let toml_choices = room.get("choices").unwrap().as_slice().unwrap();
+            let mut choices = Vec::new();
 
-And now I look and look around and there’s so many Kanyes When companies doubt me they doubt us. I have a dream.
+            for choice in toml_choices {
+                let choice = choice.as_table().unwrap();
+                let description = choice.get("description").unwrap().as_str().unwrap();
+                let toml_action = choice.get("action").unwrap();
+                let action = match toml_action {
+                    &toml::Value::String(ref s) => {
+                        if s == "win" {
+                            Action::Win
+                        } else if s == "lose" {
+                            Action::Lose
+                        } else {
+                            panic!("unknown action");
+                        }
+                    },
+                    &toml::Value::Integer(i) => { Action::Goto(i as usize) },
+                    _ => panic!("couldn't parse action"),
+                };
 
-I also wanted to point out that it’s the first album to go number 1 off of streaming!!! Utah has eliminated homelessness by 91% and also my number one design rule of anything I do from shoes to music to homes is that Kim has to like it.... Don't be scared of the truth because we need to restart the human foundation in truth
+                choices.push(Choice::new(description, action));
+            }
 
-Pablo in blood Don't hide from the truth because it is the only light. I love you. Thank you to everybody who made The Life of Pablo the number 1 album in the world!!! 
-";
+            let room = Room {
+                description: description.to_string(),
+                choices: choices,
+            };
 
-        let choices = vec![Choice::new("go to previous screen", Action::Goto(0)),
-                           Choice::new("win the game", Action::Win),
-                           Choice::new("lose the game", Action::Lose)];
-
-        let room2 = Room {
-            description: description.to_string(),
-            choices: choices,
-        };
+            rooms.push(room);
+        }
 
         Game {
-            rooms: vec![room1, room2],
+            rooms: rooms,
             current_room: 0,
             ending: None,
         }

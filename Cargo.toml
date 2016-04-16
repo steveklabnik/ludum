@@ -5,3 +5,4 @@ authors = ["Steve Klabnik <steve@steveklabnik.com>"]
 
 [dependencies]
 rustbox = "0.8.1"
+toml = "0.1.28"

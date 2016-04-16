@@ -3,6 +3,7 @@ name = "ludum"
 version = "0.1.0"
 dependencies = [
  "rustbox 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "toml 0.1.28 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -158,6 +159,14 @@ dependencies = [
 name = "termbox-sys"
 version = "0.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "toml"
+version = "0.1.28"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "rustc-serialize 0.3.19 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "winapi"

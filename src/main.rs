@@ -1,4 +1,5 @@
 extern crate rustbox;
+extern crate toml;
 
 mod console;
 mod game;
@@ -8,6 +9,7 @@ use game::Game;
 use rustbox::Key;
 
 fn main() {
+
     let console = Console::new();
 
     let mut game = Game::load();

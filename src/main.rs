@@ -11,7 +11,6 @@ use rustbox::Key;
 fn main() {
 
     let console = Console::new();
-
     let mut game = Game::load();
 
     game.render_splash(&console);
@@ -27,11 +26,13 @@ fn main() {
         game.render(&console);
 
         match console.get_keypress() {
-            Some(Key::Char('q')) => { break 'gameloop; }
+            Some(Key::Char('q')) => {
+                break 'gameloop;
+            },
             Some(Key::Char(choice)) => {
                 game.make_choice(choice)
-            }
-            _ => { }
+            },
+            _ => {}
         }
 
         if game.is_over() {

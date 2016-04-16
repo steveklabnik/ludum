@@ -20,11 +20,29 @@ impl Console {
     }
 
     pub fn clear_screen(&self) {
-        for row in 0..25 {
-            for col in 0..80 {
+        // yeah i could make this happen in one loop if i cared but i don't
+        // i also redraw too much
+        // it's 25x80 graphics, efficiency doesn't matter
+
+        // clear
+        for row in 0..26 {
+            for col in 0..81 {
                 self.rustbox.print_char(col, row, rustbox::RB_NORMAL, Color::White, Color::Black, ' ');
             }
         }
+
+        // top and bottom
+        for col in 0..81 {
+            self.rustbox.print_char(col, 0, rustbox::RB_BOLD, Color::White, Color::Black, '*');
+            self.rustbox.print_char(col, 25, rustbox::RB_BOLD, Color::White, Color::Black, '*');
+        }
+
+        // left and right
+        for row in 0..26 {
+            self.rustbox.print_char(0, row, rustbox::RB_BOLD, Color::White, Color::Black, '*');
+            self.rustbox.print_char(80, row, rustbox::RB_BOLD, Color::White, Color::Black, '*');
+        }
+
     }
 
     pub fn print(&self, col: usize, row: usize, msg: &str) {

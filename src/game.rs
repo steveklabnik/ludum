@@ -15,7 +15,7 @@ impl Game {
 
             self.rooms[current_room]
                 .choices.get(choice as usize)
-                .map(|c| c.1)
+                .map(|c| c.goto)
                 .map(|next| self.current_room = next);
         });
     }
@@ -25,7 +25,7 @@ impl Game {
         let room = &self.rooms[current_room];
 
         let choices: Vec<&str> = room.choices.iter()
-                                             .map(|c| &c.0[..])
+                                             .map(|c| &c.description[..])
                                              .collect();
 
         console.print_room(&room.description, &choices);
@@ -69,16 +69,21 @@ Pablo in blood Don't hide from the truth because it is the only light. I love yo
     }
 }
 
-struct Choice(String, usize);
-
-impl Choice {
-    fn new(description: &str, goto: usize) -> Choice {
-        Choice(description.to_string(), goto)
-    }
-}
-
 struct Room {
     description: String,
     choices: Vec<Choice>,
 }
 
+struct Choice {
+    description: String,
+    goto: usize,
+}
+
+impl Choice {
+    fn new(description: &str, goto: usize) -> Choice {
+        Choice {
+            description: description.to_string(),
+            goto: goto
+        }
+    }
+}

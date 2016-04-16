@@ -15,8 +15,6 @@ fn main() {
     loop {
         game.render(&console);
 
-        console.present();
-
         match console.get_key() {
             Some(Key::Char('q')) => { break; }
             Some(Key::Char(c)) => {

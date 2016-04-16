@@ -18,6 +18,7 @@ impl Game {
     pub fn render(&self, console: &Console) {
         let current_room = self.current_room;
         let room = &self.rooms[current_room];
+
         console.clear_screen();
         console.print_description(&room.description);
 
@@ -25,6 +26,8 @@ impl Game {
                                              .map(|c| (&c.0[..]))
                                              .collect();
         console.print_choices(&choices);
+
+        console.present();
     }
 
     pub fn load() -> Game {

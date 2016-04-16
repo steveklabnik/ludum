@@ -14,12 +14,12 @@ impl Game {
     pub fn make_choice(&mut self, choice: char) {
         choice.to_digit(10).map(|choice| {
             // we choose in 1-indexed, but vectors are 0-indexed
-            let choice = choice - 1;
+            let choice = choice as usize - 1;
 
             let current_room = self.current_room;
 
             let action = self.rooms[current_room]
-                             .choices.get(choice as usize)
+                             .choices.get(choice)
                              .map(|c| c.action.clone()); // FIXME: this is suspicious
 
             if let Some(action) = action {
@@ -27,7 +27,10 @@ impl Game {
                     Action::Goto(next) => self.current_room = next,
                     Action::Win => self.ending = Some(Ending::Win),
                     Action::Lose => self.ending = Some(Ending::Lose),
-                    Action::Aquire(item) => { self.player.aquire(item) },
+                    Action::Aquire(item) => {
+                        self.player.aquire(item);
+                        self.rooms[current_room].choices.remove(choice);
+                    },
                 }
             }
         });

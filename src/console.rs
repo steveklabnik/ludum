@@ -82,15 +82,15 @@ impl Console {
         }
     }
 
-    pub fn print_choices(&self, choices: &[(i32, &str)]) {
+    pub fn print_choices(&self, choices: &[&str]) {
         let mut line = 18;
         self.print(2, line, "What do you do?");
 
         line += 2;
 
-        for choice in choices.iter() {
-            self.print(2, line, &format!("{})", choice.0));
-            self.print(5, line, choice.1);
+        for (i, choice) in choices.iter().enumerate() {
+            self.print(2, line, &format!("{})", i + 1));
+            self.print(5, line, choice);
             line += 1;
         }
     }

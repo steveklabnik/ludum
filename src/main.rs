@@ -36,11 +36,11 @@ fn main() {
     }
 }
 
-struct Choice(i32, String, usize);
+struct Choice(String, usize);
 
 impl Choice {
-    fn new(number: i32, description: &str, goto: usize) -> Choice {
-        Choice(number, description.to_string(), goto)
+    fn new(description: &str, goto: usize) -> Choice {
+        Choice(description.to_string(), goto)
     }
 }
 
@@ -54,14 +54,14 @@ impl Room {
         console.clear_screen();
         console.print_description(&self.description);
 
-        let choices: Vec<(i32, &str)> = self.choices.iter()
-                                                    .map(|c| (c.0, &c.1[..]))
-                                                    .collect();
+        let choices: Vec<&str> = self.choices.iter()
+                                              .map(|c| (&c.0[..]))
+                                              .collect();
         console.print_choices(&choices);
     }
 
     fn make_choice(&self, choice: u32) -> Option<usize> {
-        self.choices.get((choice - 1) as usize).map(|c| c.2)
+        self.choices.get((choice - 1) as usize).map(|c| c.1)
     }
 }
 
@@ -73,7 +73,7 @@ no one can ask me or try to tell me what to Instagram... It's my art... In Roman
 Called I Miss the Old Kanye I love this new A$AP FERG album!!! Wes That’s all it was Kanye
 ";
 
-    let choices = vec![Choice::new(1, "go to next screen", 1), Choice::new(2, "leave", 1)];
+    let choices = vec![Choice::new("go to next screen", 1), Choice::new("leave", 1)];
 
     let room1 = Room {
         description: description.to_string(),
@@ -89,7 +89,7 @@ I also wanted to point out that it’s the first album to go number 1 off of str
 Pablo in blood Don't hide from the truth because it is the only light. I love you. Thank you to everybody who made The Life of Pablo the number 1 album in the world!!! 
 ";
 
-    let choices = vec![Choice::new(1, "go to previous screen", 0), Choice::new(2, "leave", 0)];
+    let choices = vec![Choice::new("go to previous screen", 0), Choice::new("leave", 0)];
 
     let room2 = Room {
         description: description.to_string(),

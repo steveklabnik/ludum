@@ -43,9 +43,10 @@ description = "go back!"
 action = 1
 
 [[rooms.choices]] 
-description = "win the game"
-action = "win"
-
-[[rooms.choices]] 
 description = "lose the game"
 action = "lose"
+
+[[rooms.choices]] 
+description = "win the game"
+action = "win"
+requires = "key"

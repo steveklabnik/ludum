@@ -14,23 +14,35 @@ impl Game {
     pub fn make_choice(&mut self, choice: char) {
         choice.to_digit(10).map(|choice| {
             // we choose in 1-indexed, but vectors are 0-indexed
-            let choice = choice as usize - 1;
+            let choice_num = choice as usize - 1;
 
             let current_room = self.current_room;
 
-            let action = self.rooms[current_room]
-                             .choices.get(choice)
-                             .map(|c| c.action.clone()); // FIXME: this is suspicious
+            let mut okay = false;
+            if let Some(choice) = self.rooms[current_room].choices.get(choice_num) {
+                okay = if choice.requires.is_some() {
+                    let item = Item { name: choice.requires.clone().unwrap() };
+                    self.player.items.contains(&item)
+                } else {
+                    true
+                };
+            }
 
-            if let Some(action) = action {
-                match action {
-                    Action::Goto(next) => self.current_room = next,
-                    Action::Win => self.ending = Some(Ending::Win),
-                    Action::Lose => self.ending = Some(Ending::Lose),
-                    Action::Aquire(item) => {
-                        self.player.aquire(item);
-                        self.rooms[current_room].choices.remove(choice);
-                    },
+            if okay {
+                let action = self.rooms[current_room]
+                                 .choices.get(choice_num)
+                                 .map(|c| c.action.clone()); // FIXME: this is suspicious
+
+                if let Some(action) = action {
+                    match action {
+                        Action::Goto(next) => self.current_room = next,
+                        Action::Win => self.ending = Some(Ending::Win),
+                        Action::Lose => self.ending = Some(Ending::Lose),
+                        Action::Aquire(item) => {
+                            self.player.aquire(item);
+                            self.rooms[current_room].choices.remove(choice_num);
+                        },
+                    }
                 }
             }
         });
@@ -41,6 +53,14 @@ impl Game {
         let room = &self.rooms[current_room];
 
         let choices: Vec<&str> = room.choices.iter()
+                                             .filter(|c| {
+                                                 if c.requires.is_some() {
+                                                     let item = Item { name: c.requires.clone().unwrap() };
+                                                     self.player.items.contains(&item)
+                                                 } else {
+                                                     true
+                                                 }
+                                             })
                                              .map(|c| &c.description[..])
                                              .collect();
         let items: Vec<&str> = self.player.items.iter()
@@ -87,9 +107,9 @@ impl Game {
             let mut choices = Vec::new();
 
             for choice in toml_choices {
-                let choice = choice.as_table().unwrap();
-                let description = choice.get("description").unwrap().as_str().unwrap();
-                let toml_action = choice.get("action").unwrap();
+                let toml_choice = choice.as_table().unwrap();
+                let description = toml_choice.get("description").unwrap().as_str().unwrap();
+                let toml_action = toml_choice.get("action").unwrap();
                 let action = match toml_action {
                     &toml::Value::String(ref s) => {
                         if s == "win" {
@@ -104,7 +124,14 @@ impl Game {
                     _ => panic!("couldn't parse action"),
                 };
 
-                choices.push(Choice::new(description, action));
+                let choice = Choice::new(description, action);
+
+                if let Some(item) = toml_choice.get("requires") {
+                    let item = item.as_str().unwrap().to_string();
+                    choices.push(choice.requires(item));
+                } else {
+                    choices.push(choice);
+                }
             }
 
             let room = Room {
@@ -155,7 +182,7 @@ impl Player {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone,PartialEq)]
 struct Item {
     name: String,
 }
@@ -163,6 +190,7 @@ struct Item {
 struct Choice {
     description: String,
     action: Action,
+    requires: Option<String>,
 }
 
 impl Choice {
@@ -170,6 +198,12 @@ impl Choice {
         Choice {
             description: description.to_string(),
             action: action,
+            requires: None,
         }
+    }
+
+    fn requires(mut self, item: String) -> Choice {
+        self.requires = Some(item);
+        self
     }
 }

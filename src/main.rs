@@ -17,8 +17,10 @@ fn main() {
 
     loop {
         match console.get_keypress() {
-            Some(_) => { break; },
-            _ => {},
+            Some(_) => {
+                break;
+            }
+            _ => {}
         }
     }
 
@@ -28,10 +30,8 @@ fn main() {
         match console.get_keypress() {
             Some(Key::Char('q')) => {
                 break 'gameloop;
-            },
-            Some(Key::Char(choice)) => {
-                game.make_choice(choice)
-            },
+            }
+            Some(Key::Char(choice)) => game.make_choice(choice),
             _ => {}
         }
 
@@ -40,8 +40,10 @@ fn main() {
 
             loop {
                 match console.get_keypress() {
-                    Some(_) => { break 'gameloop; },
-                    _ => {},
+                    Some(_) => {
+                        break 'gameloop;
+                    }
+                    _ => {}
                 }
             }
         }

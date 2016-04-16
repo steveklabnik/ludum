@@ -11,9 +11,7 @@ impl Console {
     pub fn new() -> Console {
         let rustbox = RustBox::init(Default::default()).unwrap();
 
-        Console {
-            rustbox: rustbox,
-        }
+        Console { rustbox: rustbox }
     }
 
     pub fn print_room(&self, description: &str, choices: &[&str], items: &[&str]) {
@@ -26,11 +24,9 @@ impl Console {
 
     pub fn get_keypress(&self) -> Option<Key> {
         match self.rustbox.poll_event(false) {
-            Ok(rustbox::Event::KeyEvent(key)) => {
-                Some(key)
-            },
+            Ok(rustbox::Event::KeyEvent(key)) => Some(key),
             Err(e) => panic!("{}", e),
-            _ => { None }
+            _ => None,
         }
     }
 
@@ -101,7 +97,12 @@ impl Console {
         // clear
         for row in 0..26 {
             for col in 0..81 {
-                self.rustbox.print_char(col, row, rustbox::RB_NORMAL, Color::White, Color::Black, ' ');
+                self.rustbox.print_char(col,
+                                        row,
+                                        rustbox::RB_NORMAL,
+                                        Color::White,
+                                        Color::Black,
+                                        ' ');
             }
         }
 
@@ -121,13 +122,18 @@ impl Console {
 
 
     pub fn print(&self, col: usize, row: usize, msg: &str) {
-        self.rustbox.print(col, row, rustbox::RB_NORMAL, Color::White, Color::Black, msg);
+        self.rustbox.print(col,
+                           row,
+                           rustbox::RB_NORMAL,
+                           Color::White,
+                           Color::Black,
+                           msg);
     }
 
     fn print_char(&self, col: usize, row: usize, c: char) {
         self.rustbox.print_char(col, row, rustbox::RB_NORMAL, Color::White, Color::Black, c);
     }
-    
+
     pub fn present(&self) {
         self.rustbox.present();
     }

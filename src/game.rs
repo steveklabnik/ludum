@@ -33,7 +33,8 @@ impl Game {
 
             if okay {
                 let action = self.rooms[current_room]
-                                 .choices.get(choice_num)
+                                 .choices
+                                 .get(choice_num)
                                  .map(|c| c.action.clone()); // FIXME: this is suspicious
 
                 if let Some(action) = action {
@@ -44,7 +45,7 @@ impl Game {
                         Action::Aquire(item) => {
                             self.player.aquire(item);
                             self.rooms[current_room].choices.remove(choice_num);
-                        },
+                        }
                     }
                 }
             }
@@ -55,20 +56,23 @@ impl Game {
         let current_room = self.current_room;
         let room = &self.rooms[current_room];
 
-        let choices: Vec<&str> = room.choices.iter()
-                                             .filter(|c| {
-                                                 if c.requires.is_some() {
-                                                     let item = Item { name: c.requires.clone().unwrap() };
-                                                     self.player.items.contains(&item)
-                                                 } else {
-                                                     true
-                                                 }
-                                             })
-                                             .map(|c| &c.description[..])
-                                             .collect();
-        let items: Vec<&str> = self.player.items.iter()
-                                                .map(|i| &i.name[..])
-                                                .collect();
+        let choices: Vec<&str> = room.choices
+                                     .iter()
+                                     .filter(|c| {
+                                         if c.requires.is_some() {
+                                             let item = Item { name: c.requires.clone().unwrap() };
+                                             self.player.items.contains(&item)
+                                         } else {
+                                             true
+                                         }
+                                     })
+                                     .map(|c| &c.description[..])
+                                     .collect();
+        let items: Vec<&str> = self.player
+                                   .items
+                                   .iter()
+                                   .map(|i| &i.name[..])
+                                   .collect();
 
         console.print_room(&room.description, &choices, &items);
     }
@@ -132,8 +136,8 @@ impl Game {
                         } else {
                             Action::Aquire(Item { name: s.clone() })
                         }
-                    },
-                    &toml::Value::Integer(i) => { Action::Goto(i as usize) },
+                    }
+                    &toml::Value::Integer(i) => Action::Goto(i as usize),
                     _ => panic!("couldn't parse action"),
                 };
 
@@ -159,9 +163,7 @@ impl Game {
             rooms: rooms,
             current_room: 0,
             ending: None,
-            player: Player {
-                items: Vec::new(),
-            },
+            player: Player { items: Vec::new() },
             splash: splash,
             win: win,
             lose: lose,

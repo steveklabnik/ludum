@@ -14,9 +14,14 @@ impl Console {
             Result::Err(e) => panic!("{}", e),
         };
 
-        Console {
-            rustbox: rustbox,                
-        }
+        let console = Console {
+            rustbox: rustbox,
+        };
+
+        // start with a fresh render
+        console.clear_screen();
+
+        console
     }
 
     pub fn clear_screen(&self) {

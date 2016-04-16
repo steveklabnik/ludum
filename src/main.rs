@@ -32,7 +32,6 @@ impl Room {
 fn main() {
     let console = Console::new();
 
-    console.clear_screen();
 
     let rooms = load_rooms();
     let current_room = 0;

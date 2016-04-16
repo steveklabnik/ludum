@@ -9,24 +9,53 @@ fn main() {
     let console = Console::new();
 
     let rooms = load_rooms();
-    let mut current_room = 0;
+    let mut game = Game {
+        rooms: rooms,
+        current_room: 0,
+    };
 
     loop {
-        rooms[current_room].render(&console);
+        game.render(&console);
 
         console.present();
 
         match console.get_key() {
             Some(Key::Char('q')) => { break; }
             Some(Key::Char(c)) => {
-                c.to_digit(10).and_then(|choice| {
-                    rooms[current_room].make_choice(choice)
-                }).map(|next| {
-                    current_room = next;
+                c.to_digit(10).map(|choice| {
+                    game.make_choice(choice)
                 });
             }
             _ => { }
         }
+    }
+}
+
+struct Game {
+    rooms: Vec<Room>,
+    current_room: usize,
+}
+
+impl Game {
+    fn make_choice(&mut self, choice: u32) {
+        let current_room = self.current_room;
+        let next = self.rooms[current_room].choices.get((choice - 1) as usize).map(|c| c.1);
+        match next {
+            Some(next) => self.current_room = next,
+            None => {},
+        };
+    }
+
+    fn render(&self, console: &Console) {
+        let current_room = self.current_room;
+        let room = &self.rooms[current_room];
+        console.clear_screen();
+        console.print_description(&room.description);
+
+        let choices: Vec<&str> = room.choices.iter()
+                                             .map(|c| (&c.0[..]))
+                                             .collect();
+        console.print_choices(&choices);
     }
 }
 
@@ -41,22 +70,6 @@ impl Choice {
 struct Room {
     description: String,
     choices: Vec<Choice>,
-}
-
-impl Room {
-    fn render(&self, console: &Console) {
-        console.clear_screen();
-        console.print_description(&self.description);
-
-        let choices: Vec<&str> = self.choices.iter()
-                                              .map(|c| (&c.0[..]))
-                                              .collect();
-        console.print_choices(&choices);
-    }
-
-    fn make_choice(&self, choice: u32) -> Option<usize> {
-        self.choices.get((choice - 1) as usize).map(|c| c.1)
-    }
 }
 
 fn load_rooms() -> Vec<Room> {

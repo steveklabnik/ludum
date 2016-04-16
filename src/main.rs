@@ -12,7 +12,6 @@ fn main() {
     let mut current_room = 0;
 
     loop {
-        console.clear_screen();
         rooms[current_room].render(&console);
 
         console.present();
@@ -52,6 +51,7 @@ struct Room {
 
 impl Room {
     fn render(&self, console: &Console) {
+        console.clear_screen();
         console.print_description(&self.description);
 
         let choices: Vec<(i32, &str)> = self.choices.iter()

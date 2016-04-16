@@ -42,7 +42,6 @@ impl Console {
 
     }
 
-    // unclear i'm gonna actually use this but i'm lazy so leaving it in for now
     fn print(&self, col: usize, row: usize, msg: &str) {
         self.rustbox.print(col, row, rustbox::RB_NORMAL, Color::White, Color::Black, msg);
     }

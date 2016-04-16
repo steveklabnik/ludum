@@ -22,6 +22,7 @@ impl Game {
                 match action {
                     Action::Goto(next) => self.current_room = next,
                     Action::Win => self.ending = Some(Ending::Win),
+                    Action::Lose => self.ending = Some(Ending::Lose),
                 }
             }
         });
@@ -39,10 +40,17 @@ impl Game {
     }
 
     pub fn render_ending(&self, console: &Console) {
-        console.clear();
-        console.print(5, 5, "ITS OVER!");
-        console.print(2, 23, "Press 'q' to quit");
-        console.present();
+        if let Some(ending) = self.ending {
+            console.clear();
+
+            match ending {
+                Ending::Win => console.print(5, 5, "YOU WIN!!!!!!!!!!!!!!!!!!!!!!!!!!1"),
+                Ending::Lose => console.print(5, 5, "Sorry, you lose :("),
+            }
+
+            console.print(2, 23, "Press 'q' to quit");
+            console.present();
+        }
     }
 
     pub fn is_over(&self) -> bool {
@@ -73,7 +81,9 @@ I also wanted to point out that it’s the first album to go number 1 off of str
 Pablo in blood Don't hide from the truth because it is the only light. I love you. Thank you to everybody who made The Life of Pablo the number 1 album in the world!!! 
 ";
 
-        let choices = vec![Choice::new("go to previous screen", Action::Goto(0)), Choice::new("win the game", Action::Win)];
+        let choices = vec![Choice::new("go to previous screen", Action::Goto(0)),
+                           Choice::new("win the game", Action::Win),
+                           Choice::new("lose the game", Action::Lose)];
 
         let room2 = Room {
             description: description.to_string(),
@@ -93,14 +103,17 @@ struct Room {
     choices: Vec<Choice>,
 }
 
+#[derive(Clone,Copy)]
 enum Ending {
     Win,
+    Lose,
 }
 
 #[derive(Clone,Copy)]
 enum Action {
     Goto(usize),
     Win,
+    Lose,
 }
 
 struct Choice {

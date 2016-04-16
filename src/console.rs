@@ -45,8 +45,49 @@ impl Console {
 
     }
 
+    // unclear i'm gonna actually use this but i'm lazy so leaving it in for now
     pub fn print(&self, col: usize, row: usize, msg: &str) {
         self.rustbox.print(col, row, rustbox::RB_NORMAL, Color::White, Color::Black, msg);
+    }
+
+    fn print_char(&self, col: usize, row: usize, c: char) {
+        self.rustbox.print_char(col, row, rustbox::RB_NORMAL, Color::White, Color::Black, c);
+    }
+
+    // oh god this is sloppy
+    pub fn print_description(&self, description: &str) {
+        let mut line = 2;
+        let mut count = 2;
+
+        for c in description.chars() {
+            if c == '\n' {
+                line += 1;
+                count = 2;
+                continue;
+            }
+
+            self.print_char(count, line, c);
+
+            count += 1;
+
+            if count > 78 {
+                line += 1;
+                count = 2;
+            }
+        }
+    }
+
+    pub fn print_choices(&self, choices: &[(i32, &str)]) {
+        let mut line = 18;
+        self.print(2, line, "What do you do?");
+
+        line += 2;
+
+        for choice in choices.iter() {
+            self.print(2, line, &format!("{})", choice.0));
+            self.print(5, line, choice.1);
+            line += 1;
+        }
     }
     
     pub fn present(&self) {

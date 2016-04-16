@@ -9,19 +9,11 @@ pub struct Console {
 
 impl Console {
     pub fn new() -> Console {
-        let rustbox = match RustBox::init(Default::default()) {
-            Result::Ok(v) => v,
-            Result::Err(e) => panic!("{}", e),
-        };
+        let rustbox = RustBox::init(Default::default()).unwrap();
 
-        let console = Console {
+        Console {
             rustbox: rustbox,
-        };
-
-        // start with a fresh render
-        console.clear_screen();
-
-        console
+        }
     }
 
     pub fn clear_screen(&self) {

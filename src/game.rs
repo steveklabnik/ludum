@@ -13,10 +13,15 @@ impl Game {
 
             let current_room = self.current_room;
 
-            self.rooms[current_room]
-                .choices.get(choice as usize)
-                .map(|c| c.goto)
-                .map(|next| self.current_room = next);
+            let action = self.rooms[current_room]
+                             .choices.get(choice as usize)
+                             .map(|c| c.action);
+
+            if let Some(action) = action {
+                match action {
+                    Action::Goto(next) => self.current_room = next,
+                }
+            }
         });
     }
 
@@ -39,7 +44,7 @@ no one can ask me or try to tell me what to Instagram... It's my art... In Roman
 Called I Miss the Old Kanye I love this new A$AP FERG album!!! Wes That’s all it was Kanye
 ";
 
-        let choices = vec![Choice::new("go to next screen", 1), Choice::new("leave", 1)];
+        let choices = vec![Choice::new("go to next screen", Action::Goto(1)), Choice::new("leave", Action::Goto(1))];
 
         let room1 = Room {
             description: description.to_string(),
@@ -55,7 +60,7 @@ I also wanted to point out that it’s the first album to go number 1 off of str
 Pablo in blood Don't hide from the truth because it is the only light. I love you. Thank you to everybody who made The Life of Pablo the number 1 album in the world!!! 
 ";
 
-        let choices = vec![Choice::new("go to previous screen", 0), Choice::new("leave", 0)];
+        let choices = vec![Choice::new("go to previous screen", Action::Goto(0)), Choice::new("leave", Action::Goto(0))];
 
         let room2 = Room {
             description: description.to_string(),
@@ -74,16 +79,21 @@ struct Room {
     choices: Vec<Choice>,
 }
 
+#[derive(Clone,Copy)]
+enum Action {
+    Goto(usize),
+}
+
 struct Choice {
     description: String,
-    goto: usize,
+    action: Action,
 }
 
 impl Choice {
-    fn new(description: &str, goto: usize) -> Choice {
+    fn new(description: &str, action: Action) -> Choice {
         Choice {
             description: description.to_string(),
-            goto: goto
+            action: action,
         }
     }
 }

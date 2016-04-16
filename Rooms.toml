@@ -10,6 +10,10 @@ Called I Miss the Old Kanye I love this new A$AP FERG album!!! Wes That’s all 
 description = "go to next screen"
 action = 1
 
+[[rooms.choices]] 
+description = "get this weird key"
+action = "weird key"
+
 [[rooms]]
 description = """This is the second description.
 
@@ -43,10 +47,21 @@ description = "go back!"
 action = 1
 
 [[rooms.choices]] 
+description = "keep going"
+action = 3
+
+[[rooms]]
+description = "THE FINAL ROOM"
+
+[[rooms.choices]] 
+description = "go back!"
+action = 2
+
+[[rooms.choices]] 
 description = "lose the game"
 action = "lose"
 
 [[rooms.choices]] 
 description = "win the game"
 action = "win"
-requires = "key"
+requires = "weird key"

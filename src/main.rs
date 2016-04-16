@@ -19,17 +19,11 @@ fn main() {
         match console.get_key() {
             Some(Key::Char('q')) => { break; }
             Some(Key::Char(c)) => {
-                let choice: u32 = match c.to_digit(10) {
-                    Some(i) => i,
-                    None => continue,
-                };
-
-                let next = match rooms[current_room].make_choice(choice) {
-                    Some(next) => next,
-                    None => continue,
-                };
-
-                current_room = next;
+                c.to_digit(10).and_then(|choice| {
+                    rooms[current_room].make_choice(choice)
+                }).map(|next| {
+                    current_room = next;
+                });
             }
             _ => { }
         }

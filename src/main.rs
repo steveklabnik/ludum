@@ -17,10 +17,8 @@ fn main() {
 
         match console.get_key() {
             Some(Key::Char('q')) => { break; }
-            Some(Key::Char(c)) => {
-                c.to_digit(10).map(|choice| {
-                    game.make_choice(choice)
-                });
+            Some(Key::Char(choice)) => {
+                game.make_choice(choice)
             }
             _ => { }
         }

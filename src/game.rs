@@ -6,13 +6,15 @@ pub struct Game {
 }
 
 impl Game {
-    pub fn make_choice(&mut self, choice: u32) {
-        let current_room = self.current_room;
-        let next = self.rooms[current_room].choices.get((choice - 1) as usize).map(|c| c.1);
-        match next {
-            Some(next) => self.current_room = next,
-            None => {},
-        };
+    pub fn make_choice(&mut self, choice: char) {
+        choice.to_digit(10).map(|choice| {
+            let current_room = self.current_room;
+            let next = self.rooms[current_room].choices.get((choice - 1) as usize).map(|c| c.1);
+            match next {
+                Some(next) => self.current_room = next,
+                None => {},
+            };
+        });
     }
 
     pub fn render(&self, console: &Console) {

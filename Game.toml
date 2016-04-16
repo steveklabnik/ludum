@@ -18,6 +18,13 @@ splash = """
      \\/__/             \\/__/         \\/__/         \\/__/         \\/__/
 """
 
+win = """
+YOU WIN
+"""
+lose = """
+YOU LOSE
+"""
+
 [[rooms]]
 description = """This is the first description.
 

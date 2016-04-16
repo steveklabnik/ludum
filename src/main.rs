@@ -18,7 +18,7 @@ fn main() {
 
     loop {
         match console.get_keypress() {
-            Some(Key::Char(_)) => { break; },
+            Some(_) => { break; },
             _ => {},
         }
     }
@@ -39,7 +39,7 @@ fn main() {
 
             loop {
                 match console.get_keypress() {
-                    Some(Key::Char('q')) => { break 'gameloop; },
+                    Some(_) => { break 'gameloop; },
                     _ => {},
                 }
             }

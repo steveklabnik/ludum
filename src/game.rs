@@ -9,6 +9,8 @@ pub struct Game {
     ending: Option<Ending>,
     player: Player,
     splash: String,
+    win: String,
+    lose: String,
 }
 
 impl Game {
@@ -76,11 +78,10 @@ impl Game {
             console.clear();
 
             match ending {
-                Ending::Win => console.print(5, 5, "YOU WIN!!!!!!!!!!!!!!!!!!!!!!!!!!1"),
-                Ending::Lose => console.print(5, 5, "Sorry, you lose :("),
+                Ending::Win => console.print_text(&self.win),
+                Ending::Lose => console.print_text(&self.lose),
             }
 
-            console.print(2, 23, "Press 'q' to quit");
             console.present();
         }
     }
@@ -107,6 +108,8 @@ impl Game {
         let game_data = toml.get("game").unwrap();
         let game_data = game_data.as_table().unwrap();
         let splash = game_data.get("splash").unwrap().as_str().unwrap().to_string();
+        let win = game_data.get("win").unwrap().as_str().unwrap().to_string();
+        let lose = game_data.get("lose").unwrap().as_str().unwrap().to_string();
 
         let toml_rooms = toml.get("rooms").unwrap().as_slice().unwrap();
         for room in toml_rooms {
@@ -160,6 +163,8 @@ impl Game {
                 items: Vec::new(),
             },
             splash: splash,
+            win: win,
+            lose: lose,
         }
     }
 }

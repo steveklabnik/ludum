@@ -5,6 +5,25 @@ mod console;
 use console::Console;
 use rustbox::Key;
 
+fn main() {
+    let console = Console::new();
+
+
+    let rooms = load_rooms();
+    let current_room = 0;
+
+    rooms[current_room].render(&console);
+
+    loop {
+        console.present();
+
+        match console.get_key() {
+            Some(Key::Char('q')) => { break; }
+            _ => { }
+        }
+    }
+}
+
 struct Choice(i32, String, i32);
 
 impl Choice {
@@ -26,25 +45,6 @@ impl Room {
                                                     .map(|c| (c.0, &c.1[..]))
                                                     .collect();
         console.print_choices(&choices);
-    }
-}
-
-fn main() {
-    let console = Console::new();
-
-
-    let rooms = load_rooms();
-    let current_room = 0;
-
-    rooms[current_room].render(&console);
-
-    loop {
-        console.present();
-
-        match console.get_key() {
-            Some(Key::Char('q')) => { break; }
-            _ => { }
-        }
     }
 }
 

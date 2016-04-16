@@ -8,12 +8,15 @@ pub struct Game {
 impl Game {
     pub fn make_choice(&mut self, choice: char) {
         choice.to_digit(10).map(|choice| {
+            // we choose in 1-indexed, but vectors are 0-indexed
+            let choice = choice - 1;
+
             let current_room = self.current_room;
-            let next = self.rooms[current_room].choices.get((choice - 1) as usize).map(|c| c.1);
-            match next {
-                Some(next) => self.current_room = next,
-                None => {},
-            };
+
+            self.rooms[current_room]
+                .choices.get(choice as usize)
+                .map(|c| c.1)
+                .map(|next| self.current_room = next);
         });
     }
 

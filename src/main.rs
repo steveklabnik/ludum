@@ -22,5 +22,10 @@ fn main() {
             }
             _ => { }
         }
+
+        if game.is_over() {
+            game.render_ending(&console);
+            break;
+        }
     }
 }

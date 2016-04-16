@@ -1,8 +1,10 @@
 use console::Console;
+use rustbox::Key;
 
 pub struct Game {
     rooms: Vec<Room>,
     current_room: usize,
+    ending: Option<Ending>,
 }
 
 impl Game {
@@ -20,6 +22,7 @@ impl Game {
             if let Some(action) = action {
                 match action {
                     Action::Goto(next) => self.current_room = next,
+                    Action::Win => self.ending = Some(Ending::Win),
                 }
             }
         });
@@ -34,6 +37,23 @@ impl Game {
                                              .collect();
 
         console.print_room(&room.description, &choices);
+    }
+
+    pub fn render_ending(&self, console: &Console) {
+        console.clear();
+        console.print(5, 5, "ITS OVER!");
+        console.print(2, 23, "Press 'q' to quit");
+        console.present();
+        loop {
+            match console.get_keypress() {
+                Some(Key::Char('q')) => { break; },
+                _ => {},
+            }
+        }
+    }
+
+    pub fn is_over(&self) -> bool {
+        self.ending.is_some()
     }
 
     pub fn load() -> Game {
@@ -60,7 +80,7 @@ I also wanted to point out that it’s the first album to go number 1 off of str
 Pablo in blood Don't hide from the truth because it is the only light. I love you. Thank you to everybody who made The Life of Pablo the number 1 album in the world!!! 
 ";
 
-        let choices = vec![Choice::new("go to previous screen", Action::Goto(0)), Choice::new("leave", Action::Goto(0))];
+        let choices = vec![Choice::new("go to previous screen", Action::Goto(0)), Choice::new("win the game", Action::Win)];
 
         let room2 = Room {
             description: description.to_string(),
@@ -70,6 +90,7 @@ Pablo in blood Don't hide from the truth because it is the only light. I love yo
         Game {
             rooms: vec![room1, room2],
             current_room: 0,
+            ending: None,
         }
     }
 }
@@ -79,9 +100,14 @@ struct Room {
     choices: Vec<Choice>,
 }
 
+enum Ending {
+    Win,
+}
+
 #[derive(Clone,Copy)]
 enum Action {
     Goto(usize),
+    Win,
 }
 
 struct Choice {

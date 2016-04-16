@@ -74,7 +74,7 @@ impl Console {
         }
     }
 
-    fn clear(&self) {
+    pub fn clear(&self) {
         // yeah i could make this happen in one loop if i cared but i don't
         // i also redraw too much
         // it's 25x80 graphics, efficiency doesn't matter
@@ -101,7 +101,7 @@ impl Console {
     }
 
 
-    fn print(&self, col: usize, row: usize, msg: &str) {
+    pub fn print(&self, col: usize, row: usize, msg: &str) {
         self.rustbox.print(col, row, rustbox::RB_NORMAL, Color::White, Color::Black, msg);
     }
 

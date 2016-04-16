@@ -18,7 +18,7 @@ impl Console {
 
     pub fn print_room(&self, description: &str, choices: &[&str], items: &[&str]) {
         self.clear();
-        self.print_description(description);
+        self.print_text(description);
         self.print_choices(choices);
         self.print_items(items);
         self.present();
@@ -35,7 +35,7 @@ impl Console {
     }
 
     // oh god this is sloppy
-    fn print_description(&self, description: &str) {
+    pub fn print_text(&self, description: &str) {
         let mut line = 2;
         let mut count = 2;
 

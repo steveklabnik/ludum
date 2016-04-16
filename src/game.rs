@@ -8,6 +8,7 @@ pub struct Game {
     current_room: usize,
     ending: Option<Ending>,
     player: Player,
+    splash: String,
 }
 
 impl Game {
@@ -84,6 +85,12 @@ impl Game {
         }
     }
 
+    pub fn render_splash(&self, console: &Console) {
+        console.clear();
+        console.print_text(&self.splash);
+        console.present();
+    }
+
     pub fn is_over(&self) -> bool {
         self.ending.is_some()
     }
@@ -97,6 +104,9 @@ impl Game {
         let toml = toml::Parser::new(&toml).parse().unwrap();
 
         let mut rooms = Vec::new();
+        let game_data = toml.get("game").unwrap();
+        let game_data = game_data.as_table().unwrap();
+        let splash = game_data.get("splash").unwrap().as_str().unwrap().to_string();
 
         let toml_rooms = toml.get("rooms").unwrap().as_slice().unwrap();
         for room in toml_rooms {
@@ -149,6 +159,7 @@ impl Game {
             player: Player {
                 items: Vec::new(),
             },
+            splash: splash,
         }
     }
 }

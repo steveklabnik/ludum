@@ -14,6 +14,15 @@ fn main() {
 
     let mut game = Game::load();
 
+    game.render_splash(&console);
+
+    loop {
+        match console.get_keypress() {
+            Some(Key::Char(_)) => { break; },
+            _ => {},
+        }
+    }
+
     'gameloop: loop {
         game.render(&console);
 

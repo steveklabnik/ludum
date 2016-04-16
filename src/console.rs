@@ -16,7 +16,7 @@ impl Console {
         }
     }
 
-    pub fn clear_screen(&self) {
+    fn clear(&self) {
         // yeah i could make this happen in one loop if i cared but i don't
         // i also redraw too much
         // it's 25x80 graphics, efficiency doesn't matter
@@ -43,7 +43,7 @@ impl Console {
     }
 
     // unclear i'm gonna actually use this but i'm lazy so leaving it in for now
-    pub fn print(&self, col: usize, row: usize, msg: &str) {
+    fn print(&self, col: usize, row: usize, msg: &str) {
         self.rustbox.print(col, row, rustbox::RB_NORMAL, Color::White, Color::Black, msg);
     }
 
@@ -52,7 +52,7 @@ impl Console {
     }
 
     pub fn print_room(&self, description: &str, choices: &[&str]) {
-        self.clear_screen();
+        self.clear();
         self.print_description(description);
         self.print_choices(choices);
         self.present();

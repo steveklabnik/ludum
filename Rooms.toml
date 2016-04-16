@@ -26,8 +26,22 @@ Pablo in blood Don't hide from the truth because it is the only light. I love yo
 """
 
 [[rooms.choices]] 
+description = "go to next screen"
+action = 2
+
+[[rooms.choices]] 
 description = "go to previous screen"
 action = 0
+
+[[rooms]]
+description = """This is the first room that I made in TOML.
+
+It's pretty good, I guess. I really have to resist the temptation to make a level editor to make making this stuff easier.
+"""
+
+[[rooms.choices]] 
+description = "go back!"
+action = 1
 
 [[rooms.choices]] 
 description = "win the game"

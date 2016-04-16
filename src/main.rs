@@ -13,6 +13,22 @@ impl Choice {
     }
 }
 
+struct Room {
+    description: String,
+    choices: Vec<Choice>,
+}
+
+impl Room {
+    fn render(&self, console: &Console) {
+        console.print_description(&self.description);
+
+        let choices: Vec<(i32, &str)> = self.choices.iter()
+                                                    .map(|c| (c.0, &c.1[..]))
+                                                    .collect();
+        console.print_choices(&choices);
+    }
+}
+
 fn main() {
     let console = Console::new();
 
@@ -25,11 +41,14 @@ no one can ask me or try to tell me what to Instagram... It's my art... In Roman
 Called I Miss the Old Kanye I love this new A$AP FERG album!!! Wes That’s all it was Kanye
 ";
 
-    console.print_description(description);
-
     let choices = vec![Choice::new(1, "go to next screen", 2), Choice::new(2, "leave", 2)];
 
-    print_choices(&console, &choices);
+    let room = Room {
+        description: description.to_string(),
+        choices: choices,
+    };
+
+    room.render(&console);
 
     loop {
         console.present();
@@ -39,11 +58,4 @@ Called I Miss the Old Kanye I love this new A$AP FERG album!!! Wes That’s all 
             _ => { }
         }
     }
-}
-
-fn print_choices(console: &Console, choices: &[Choice]) {
-    let choices: Vec<(i32, &str)> = choices.into_iter()
-                                           .map(|c| (c.0, &c.1[..]))
-                                           .collect();
-    console.print_choices(&choices);
 }

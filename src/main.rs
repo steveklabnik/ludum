@@ -12,11 +12,11 @@ fn main() {
 
     let mut game = Game::load();
 
-    loop {
+    'gameloop: loop {
         game.render(&console);
 
         match console.get_keypress() {
-            Some(Key::Char('q')) => { break; }
+            Some(Key::Char('q')) => { break 'gameloop; }
             Some(Key::Char(choice)) => {
                 game.make_choice(choice)
             }
@@ -25,7 +25,13 @@ fn main() {
 
         if game.is_over() {
             game.render_ending(&console);
-            break;
+
+            loop {
+                match console.get_keypress() {
+                    Some(Key::Char('q')) => { break 'gameloop; },
+                    _ => {},
+                }
+            }
         }
     }
 }

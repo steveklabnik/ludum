@@ -1,5 +1,4 @@
 use console::Console;
-use rustbox::Key;
 
 pub struct Game {
     rooms: Vec<Room>,
@@ -44,12 +43,6 @@ impl Game {
         console.print(5, 5, "ITS OVER!");
         console.print(2, 23, "Press 'q' to quit");
         console.present();
-        loop {
-            match console.get_keypress() {
-                Some(Key::Char('q')) => { break; },
-                _ => {},
-            }
-        }
     }
 
     pub fn is_over(&self) -> bool {

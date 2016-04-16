@@ -10,11 +10,6 @@ Called I Miss the Old Kanye I love this new A$AP FERG album!!! Wes That’s all 
 description = "go to next screen"
 action = 1
 
-[[rooms.choices]] 
-description = "leave"
-action = 1
-
-
 [[rooms]]
 description = """This is the second description.
 
@@ -32,6 +27,10 @@ action = 2
 [[rooms.choices]] 
 description = "go to previous screen"
 action = 0
+
+[[rooms.choices]] 
+description = "grab the key"
+action = "key"
 
 [[rooms]]
 description = """This is the first room that I made in TOML.

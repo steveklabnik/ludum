@@ -20,13 +20,14 @@ impl Game {
 
             let action = self.rooms[current_room]
                              .choices.get(choice as usize)
-                             .map(|c| c.action);
+                             .map(|c| c.action.clone()); // FIXME: this is suspicious
 
             if let Some(action) = action {
                 match action {
                     Action::Goto(next) => self.current_room = next,
                     Action::Win => self.ending = Some(Ending::Win),
                     Action::Lose => self.ending = Some(Ending::Lose),
+                    Action::Aquire(item) => { self.player.aquire(item) },
                 }
             }
         });
@@ -39,8 +40,11 @@ impl Game {
         let choices: Vec<&str> = room.choices.iter()
                                              .map(|c| &c.description[..])
                                              .collect();
+        let items: Vec<&str> = self.player.items.iter()
+                                                .map(|i| &i.name[..])
+                                                .collect();
 
-        console.print_room(&room.description, &choices);
+        console.print_room(&room.description, &choices, &items);
     }
 
     pub fn render_ending(&self, console: &Console) {
@@ -90,7 +94,7 @@ impl Game {
                         } else if s == "lose" {
                             Action::Lose
                         } else {
-                            panic!("unknown action");
+                            Action::Aquire(Item { name: s.clone() })
                         }
                     },
                     &toml::Value::Integer(i) => { Action::Goto(i as usize) },
@@ -130,17 +134,25 @@ enum Ending {
     Lose,
 }
 
-#[derive(Clone,Copy)]
+#[derive(Clone)]
 enum Action {
     Goto(usize),
     Win,
     Lose,
+    Aquire(Item),
 }
 
 struct Player {
     items: Vec<Item>,
 }
 
+impl Player {
+    fn aquire(&mut self, item: Item) {
+        self.items.push(item)
+    }
+}
+
+#[derive(Clone)]
 struct Item {
     name: String,
 }

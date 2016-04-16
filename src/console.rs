@@ -16,10 +16,11 @@ impl Console {
         }
     }
 
-    pub fn print_room(&self, description: &str, choices: &[&str]) {
+    pub fn print_room(&self, description: &str, choices: &[&str], items: &[&str]) {
         self.clear();
         self.print_description(description);
         self.print_choices(choices);
+        self.print_items(items);
         self.present();
     }
 
@@ -69,6 +70,24 @@ impl Console {
 
             self.print(2, line, &format!("{})", i));
             self.print(5, line, choice);
+
+            line += 1;
+        }
+    }
+
+    fn print_items(&self, items: &[&str]) {
+        let mut line = 18;
+
+        self.print(42, line, "Items");
+
+        line += 2;
+
+        for (i, item) in items.iter().enumerate() {
+            // we choose in 1-indexed, but vectors are 0-indexed
+            let i = i + 1;
+
+            self.print(42, line, &format!("{})", i));
+            self.print(47, line, item);
 
             line += 1;
         }

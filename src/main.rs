@@ -4,12 +4,13 @@ mod console;
 mod game;
 
 use console::Console;
+use game::Game;
 use rustbox::Key;
 
 fn main() {
     let console = Console::new();
 
-    let mut game = game::load();
+    let mut game = Game::load();
 
     loop {
         game.render(&console);

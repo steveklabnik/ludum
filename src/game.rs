@@ -96,7 +96,7 @@ impl Game {
     }
 
     pub fn load() -> Game {
-        let mut file = File::open("Rooms.toml").unwrap();
+        let mut file = File::open("Game.toml").unwrap();
         let mut toml = String::new();
 
         file.read_to_string(&mut toml).unwrap();

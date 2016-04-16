@@ -8,11 +8,7 @@ use rustbox::Key;
 fn main() {
     let console = Console::new();
 
-    let rooms = load_rooms();
-    let mut game = Game {
-        rooms: rooms,
-        current_room: 0,
-    };
+    let mut game = load_game();
 
     loop {
         game.render(&console);
@@ -72,7 +68,7 @@ struct Room {
     choices: Vec<Choice>,
 }
 
-fn load_rooms() -> Vec<Room> {
+fn load_game() -> Game {
     let description = "This is the first description.
 
 no one can ask me or try to tell me what to Instagram... It's my art... In Roman times the artist would contemplate proportions and colors. Now there is only one important color... Green Tribe changed music forever.
@@ -103,5 +99,8 @@ Pablo in blood Don't hide from the truth because it is the only light. I love yo
         choices: choices,
     };
 
-    vec![room1, room2]
+    Game {
+        rooms: vec![room1, room2],
+        current_room: 0,
+    }
 }

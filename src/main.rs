@@ -8,26 +8,39 @@ use rustbox::Key;
 fn main() {
     let console = Console::new();
 
-
     let rooms = load_rooms();
-    let current_room = 0;
-
-    rooms[current_room].render(&console);
+    let mut current_room = 0;
 
     loop {
+        console.clear_screen();
+        rooms[current_room].render(&console);
+
         console.present();
 
         match console.get_key() {
             Some(Key::Char('q')) => { break; }
+            Some(Key::Char(c)) => {
+                let choice: u32 = match c.to_digit(10) {
+                    Some(i) => i,
+                    None => continue,
+                };
+
+                let next = match rooms[current_room].make_choice(choice) {
+                    Some(next) => next,
+                    None => continue,
+                };
+
+                current_room = next;
+            }
             _ => { }
         }
     }
 }
 
-struct Choice(i32, String, i32);
+struct Choice(i32, String, usize);
 
 impl Choice {
-    fn new(number: i32, description: &str, goto: i32) -> Choice {
+    fn new(number: i32, description: &str, goto: usize) -> Choice {
         Choice(number, description.to_string(), goto)
     }
 }
@@ -45,6 +58,10 @@ impl Room {
                                                     .map(|c| (c.0, &c.1[..]))
                                                     .collect();
         console.print_choices(&choices);
+    }
+
+    fn make_choice(&self, choice: u32) -> Option<usize> {
+        self.choices.get((choice - 1) as usize).map(|c| c.2)
     }
 }
 

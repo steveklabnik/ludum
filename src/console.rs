@@ -87,7 +87,7 @@ impl Console {
             let i = i + 1;
 
             self.print(42, line, &format!("{})", i));
-            self.print(47, line, item);
+            self.print(45, line, item);
 
             line += 1;
         }

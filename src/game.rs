@@ -7,6 +7,7 @@ pub struct Game {
     rooms: Vec<Room>,
     current_room: usize,
     ending: Option<Ending>,
+    player: Player,
 }
 
 impl Game {
@@ -111,6 +112,9 @@ impl Game {
             rooms: rooms,
             current_room: 0,
             ending: None,
+            player: Player {
+                items: Vec::new(),
+            },
         }
     }
 }
@@ -131,6 +135,14 @@ enum Action {
     Goto(usize),
     Win,
     Lose,
+}
+
+struct Player {
+    items: Vec<Item>,
+}
+
+struct Item {
+    name: String,
 }
 
 struct Choice {

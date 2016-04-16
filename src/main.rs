@@ -15,7 +15,7 @@ fn main() {
     loop {
         game.render(&console);
 
-        match console.get_key() {
+        match console.get_keypress() {
             Some(Key::Char('q')) => { break; }
             Some(Key::Char(choice)) => {
                 game.make_choice(choice)

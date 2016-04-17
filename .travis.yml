@@ -21,8 +21,6 @@ matrix:
       env: TARGET=x86_64-apple-darwin CHANNEL=stable
     - os: linux
       env: TARGET=x86_64-unknown-linux-gnu CHANNEL=stable
-    - os: linux
-      env: TARGET=x86_64-unknown-linux-musl CHANNEL=stable
 
 before_install:
   - export PATH="$PATH:$HOME/.cargo/bin"

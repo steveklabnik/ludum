@@ -1,0 +1,72 @@
+language: generic
+
+env:
+  global:
+    # This will be part of the release tarball
+    - PROJECT_NAME=rust-ludum
+
+# TODO Feel free to remove the channels/targets you don't need
+# NOTE Make *sure* you don't remove a reference (&foo) if you are going to dereference it (*foo)
+matrix:
+  include:
+    - os: osx
+      env: TARGET=i686-apple-darwin CHANNEL=stable
+    - os: linux
+      env: TARGET=i686-unknown-linux-gnu CHANNEL=stable
+      addons:
+        apt:
+          packages: &i686_unknown_linux_gnu
+            - gcc-multilib
+    - os: osx
+      env: TARGET=x86_64-apple-darwin CHANNEL=stable
+    - os: linux
+      env: TARGET=x86_64-unknown-linux-gnu CHANNEL=stable
+    - os: linux
+      env: TARGET=x86_64-unknown-linux-musl CHANNEL=stable
+
+before_install:
+  - export PATH="$PATH:$HOME/.cargo/bin"
+
+install:
+  - bash ci/install.sh
+
+script:
+  - bash ci/script.sh
+
+before_deploy:
+  - bash ci/before_deploy.sh
+
+deploy:
+  provider: releases
+  # TODO Regenerate this api_key for your project, this one won't work for you. Here's how:
+  # - Go to 'https://github.com/settings/tokens/new' and generate a Token with only the
+  # `public_repo` scope enabled
+  # - Call `travis encrypt $github_token` where $github_token is the token you got in the previous
+  # step and `travis` is the official Travis CI gem (see https://rubygems.org/gems/travis/)
+  # - Enter the "encrypted value" below
+  api_key:
+    secure: "axRwtY6NMlqgeN2AG4Cupz0m5stXgCs6niJnt2Vl8aLP/TtXTLHljbkBhDC1mZTm4NsZxDNGfIx+0Z8fuSkbDXuzQjNtGCkrjZenW/t1J4gqhPyNugccoiQTKIcKDEAiLSAuKaeX0tAw8eKYyehac2a5zFA+rp8FjvVLDl1UZRwpF+kJ7DrCmWETWKXHI+tBJGYN6ix0wjWN3vQRy89rB+HQ0jMQQbeNPZFXonaxDkqI4gJ4cwhiopIzaPVkmANj5X8Fz7eVfoKxnL9b53+d2kBPAIAAx0Bn0c9SDHZtQ9Wk5zj4Ew3744j5pEnONSwV/kwxy1Q2QWSRZc32jVhT5H4mJGyqrC9XEBMTotKj/9qNzQ1mjz7LgKTLiEa7FCwbJ6xv/AW1j6+7hRcREd9ZKzm3fWfb3iMsLN87yq0Q/1Kob0u8pobG63AnKhocnVdfdJaHin73BQj3cEjH8i7D3+xmBPMOU8RakRSLchU3xOKK2VCqzeNaBvBwaowWW8Fwez4LvHaZSJZ9zSUHyGyj5sj5pBWttcMDEz3KQuqoz7McQGVWa2TkvY5vMks2NSemL5LE28cmYzIof1n7hlrSR2Wp4dQ/uzs9FluMpCy0aAarnlBFu+Ff9hfIgGITjUwpFeB33RH1ajikBsZCghACZN/cEjSE7auWnarsF+k40Ms="
+
+  file: ${PROJECT_NAME}-${TRAVIS_TAG}-${TARGET}.tar.gz
+  # don't delete the artifacts from previous phases
+  skip_cleanup: true
+  # deploy when a new tag is pushed
+  on:
+    # channel to use to produce the release artifacts
+    # NOTE make sure you only release *once* per target
+    # TODO you may want to pick a different channel
+    condition: $CHANNEL = stable
+    tags: true
+
+branches:
+  only:
+    # Pushes and PR to the master branch
+    - master
+    # IMPORTANT Ruby regex to match tags. Required, or travis won't trigger deploys when a new tag
+    # is pushed. This regex matches semantic versions like v1.2.3-rc4+2016.02.22
+    - /^v\d+\.\d+\.\d+.*$/
+
+notifications:
+  email:
+    on_success: never
+

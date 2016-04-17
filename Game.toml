@@ -512,4 +512,151 @@ help make programs easier to understand.
 
 [[rooms.choices]] 
 description = "Press the 'enter' key"
+action = 27
+
+[[rooms]]
+description = """Now that you know a bit about BASIC, you can start to make your own
+programs! You open up the BASIC program next, and time just seems to pass
+on its own...
+"""
+
+[[rooms.choices]] 
+description = "Write some programs"
+action = 28
+
+[[rooms]]
+description = """Time goes by. You make a bunch of little programs, and learn a lot. There
+are some harder games that you don't quite know how to make yet, though.
+
+But today, that's about to change. Time to wake up!
+"""
+
+[[rooms.choices]] 
+description = "Wake up"
+action = 29
+
+[[rooms]]
+description = """"It's library day!" Your mom knows that you really love reading books,
+books of all kinds. Going to the library is one of your favorite things.
+
+But today, today you realize something: there are books about computers.
+You can look for books about programming at the library!
+
+"Come on, the car is starting!"
+"""
+
+[[rooms.choices]] 
+description = "Go to the library"
+action = 30
+
+[[rooms]]
+description = """Ahh, the local library. So many books! Your parents told you that reading
+was very important, and luckily for you, it's also something that you
+really enjoy doing. There are so many things to read, and the library has
+so many books!
+
+You've learned in school about the Dewey Decimal System, and how the books
+are organized. The card catalogue tells you that there are, in fact, some
+books related to programming, and they're in that section over there.
+"""
+
+[[rooms.choices]] 
+description = "Go to the computer section"
+action = 31
+
+[[rooms.choices]] 
+description = "Go home"
+action = 32
+
+[[rooms]]
+description = """You're in the computer section of the library. So many books!
+
+It's not totally clear which one you should choose...
+"""
+
+[[rooms.choices]] 
+description = "Return to library entrance"
+action = 30
+
+[[rooms.choices]] 
+description = "Pick out a book"
+action = "Book: 'Making a Game'"
+
+[[rooms]]
+description = """You're at home. Your family comes from fairly humble means: I mean, they
+could afford the $199 for that computer, but just barely. Farmers don't
+make a lot of money. You're never wanting for food, but you don't have
+money to just throw around, either.
+
+Now that you're obsessed with your computer, there's not a lot to do,
+other than play around with it.
+"""
+
+[[rooms.choices]] 
+description = "Go to the library"
+action = 30
+
+[[rooms.choices]] 
+description = "Read your book"
+action = 33
+requires = "Book: 'Making a Game'"
+
+[[rooms]]
+description = """This book is so good! It even has examples on how to make little text
+adventure games. For example, using line numbers to help indicate which
+room you're in: lines 100-199, for example, are in room 1, and lines
+400-499 are in room 4. This gives you 100 lines a room, but you don't need
+to rearrange your entire program when you want to add some more lines.
+That was a painful process before you learned the trick.
+
+With this new knowledge, you work hard on a new game. It's pretty good!
+You've got a knack for this.
+
+Time to wake up, another day is about to begin.
+"""
+
+[[rooms.choices]] 
+description = "Wake up"
+action = 34
+
+[[rooms]]
+description = """Uuuuuugh school starts early.
+
+That said, you manage to roll out of bed. They put Pokémon on right before
+you need to get on the bus, and you don't want to miss an episode. So it's
+not _that_ hard to wake up.
+
+Time to go to school!
+"""
+
+[[rooms.choices]] 
+description = "Go to School"
+action = 35
+
+[[rooms]]
+description = """At school, a friend of yours asks about the game you've been working on.
+"How's it going? Did you finish it?"
+
+"Yes! Just yesterday. It's pretty cool."
+
+"My mom just gave me $10 for my allowance for the week. Could I buy a copy
+of the code from you? I'm learning how to program myself, it would be neat
+to see how you've done things."
+"""
+
+[[rooms.choices]] 
+description = "Sell your game"
+action = 36
+
+[[rooms]]
+description = """And so begins a career in software, that continues until you're 30, when
+you participate in Ludum Dare 35. And make interactive fiction about how
+you learned how to program as a child.
+
+This short game isn't _exactly_ my childhood, but it's close. I hope you
+had fun; I know I had fun making it.
+"""
+
+[[rooms.choices]] 
+description = "Keep living life"
 action = "win"

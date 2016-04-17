@@ -2,6 +2,13 @@
 name = "ludum"
 version = "0.1.0"
 authors = ["Steve Klabnik <steve@steveklabnik.com>"]
+description = """An interactive fiction engine.
+
+Create a Game.toml file, and then run ludum. It will then play the game
+described in the file!"""
+license = "AGPL-3.0"
+homepage = "https://github.com/steveklabnik/ludum"
+repository = "https://github.com/steveklabnik/ludum"
 
 [dependencies]
 rustbox = "0.8.1"

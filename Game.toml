@@ -45,81 +45,471 @@ lose = """
 
 
 
-      __    __  _____   __  __      __       _____   ____    ____      
-     /\\ \\  /\\ \\/\\  __`\\/\\ \\/\\ \\    /\\ \\     /\\  __`\\/\\  _`\\ /\\  _`\\    
-     \\ `\\`\\\\/'/\\ \\ \\/\\ \\ \\ \\ \\ \\   \\ \\ \\    \\ \\ \\/\\ \\ \\,\\L\\_\\ \\ \\L\\_\\  
-      `\\ `\\ /'  \\ \\ \\ \\ \\ \\ \\ \\ \\   \\ \\ \\  __\\ \\ \\ \\ \\/_\\__ \\\\ \\  _\\L  
-        `\\ \\ \\   \\ \\ \\_\\ \\ \\ \\_\\ \\   \\ \\ \\L\\ \\\\ \\ \\_\\ \\/\\ \\L\\ \\ \\ \\L\\ \\
-          \\ \\_\\   \\ \\_____\\ \\_____\\   \\ \\____/ \\ \\_____\\ `\\____\\ \\____/
-           \\/_/    \\/_____/\\/_____/    \\/___/   \\/_____/\\/_____/\\/___/ 
-                                                                       
-                     b e t t e r  l u c k  n e x t  t i m e
+There are so many other things to do than stay inside and play with
+computers. Maybe you pick up a basketball, and start practicing your shot.
+Maybe you start looking more closely at the grass, flowers, and insects,
+and start cataloguing what you see. Maybe you have fun just playing in the
+small stream out back. Maybe you learn more about the farm, and taking
+care of the cows.
+
+There's a whole world of possibilities out there. Your fate doesn't have
+to be computers.
+
+
+
+
+
+
+(Press any key to quit. Thanks for playing!)
+
 """
 
 [[rooms]]
-description = """This is the first description.
+description = """"It's time to go visit your grandparents!"
 
-no one can ask me or try to tell me what to Instagram... It's my art... In Roman times the artist would contemplate proportions and colors. Now there is only one important color... Green Tribe changed music forever.
+Your mom is calling to you. She says that there's a surprise waiting for
+you at your grandparents' house. They live just down the road, and you
+spend a lot of time with them, generally. But today is a special day.
+Apparently. You're not sure what that's about, but you love visiting your
+grandparents, so you climb in the car with no complaints.
 
-Called I Miss the Old Kanye I love this new A$AP FERG album!!! Wes That’s all it was Kanye
+Pulling up to their house, your parents tell you that it might not be
+ready yet, though. "You can play outside in the yard for a bit first if
+you'd like, or just come inside. It's up to you."
 """
 
 [[rooms.choices]] 
-description = "go to next screen"
+description = "Go outside"
 action = 1
 
 [[rooms.choices]] 
-description = "get this weird key"
-action = "weird key"
+description = "Enter the house"
+action = 2
 
 [[rooms]]
-description = """This is the second description.
+description = """Grass, trees, a gravel driveway. Your family lives in a farm, and so
+you're quite familiar with being outdoors. Living in a rural town, there's
+not much else to do, really. I guess reading books can be hard when it's
+sunny outside, and when it snows in the winter, you can't stay out for
+long. It's too cold.
 
-And now I look and look around and there’s so many Kanyes When companies doubt me they doubt us. I have a dream.
-
-I also wanted to point out that it’s the first album to go number 1 off of streaming!!! Utah has eliminated homelessness by 91% and also my number one design rule of anything I do from shoes to music to homes is that Kim has to like it.... Don't be scared of the truth because we need to restart the human foundation in truth
-
-Pablo in blood Don't hide from the truth because it is the only light. I love you. Thank you to everybody who made The Life of Pablo the number 1 album in the world!!! 
+But today is a bright, summer day. Your grandparents have a pretty big
+plot; land is cheap out here in farming country. You might even say
+there's a whole big world to explore out there...
 """
 
 [[rooms.choices]] 
-description = "go to next screen"
+description = "Enter the house"
 action = 2
 
 [[rooms.choices]] 
-description = "go to previous screen"
-action = 0
-
-[[rooms.choices]] 
-description = "grab the key"
-action = "key"
-
-[[rooms]]
-description = """This is the first room that I made in TOML.
-
-It's pretty good, I guess. I really have to resist the temptation to make a level editor to make making this stuff easier.
-"""
-
-[[rooms.choices]] 
-description = "go back!"
-action = 1
-
-[[rooms.choices]] 
-description = "keep going"
-action = 3
-
-[[rooms]]
-description = "THE FINAL ROOM"
-
-[[rooms.choices]] 
-description = "go back!"
-action = 2
-
-[[rooms.choices]] 
-description = "lose the game"
+description = "Keep playing outside"
 action = "lose"
 
+[[rooms]]
+description = """Your entire family is in the living room. "Hey Steve, check this out! A
+computer!" There's some kind of box hooked up to a T.V. with a bunch of
+keys, one for each letter.
+
+"We're trying to figure out how to turn this thing on. You're really gonna
+like it. We're just missing something..."
+"""
+
 [[rooms.choices]] 
-description = "win the game"
+description = "Go to the kitchen"
+action = 3
+
+[[rooms.choices]] 
+description = "Go outside"
+action = 1
+
+[[rooms.choices]] 
+description = "Plug in the computer"
+action = 5
+requires = "Power Cable"
+
+[[rooms]]
+description = """You enter the kitchen. There's a huge table. Lots of memories in this
+room. It's where your whole family has Thanksgiving dinner, for example.
+You've made a lot of arts and crafts in this room; the table is just a
+great all-around workspace.
+
+There's a stove, and oven, and a big sink. Even though there's a lot of
+people in the house, somehow, the dishes never pile up. There's always
+more clean ones available. Your family doesn't have much, but is proud of
+what it does have.
+
+That said, there's not a lot going on in here today. Everyone's too busy
+in the living room.
+"""
+
+[[rooms.choices]] 
+description = "Go to the living room"
+action = 2
+
+[[rooms.choices]] 
+description = "Go to the guest bedroom"
+action = 4
+
+[[rooms]]
+description = """This house, like many older houses, was built for more than one generation
+of family to live together. That doesn't happen as much anymore, though.
+So what would have been your parents' room in another time period is
+instead a guest room, for when you stay around too late to make it back to
+your house, or when relatives from far away come to visit for a few days.
+
+There's a bed, a nightstand, and a tiny dresser that holds some clothes.
+Just because there's an extra room doesn't mean that this place is
+massive. Everything just barely fits. Which means you can easily spot
+something that's out of place.
+"""
+
+[[rooms.choices]] 
+description = "Go to the kitchen"
+action = 3
+
+[[rooms.choices]] 
+description = "Pick up power cable"
+action = "Power Cable"
+
+[[rooms]]
+description = """You take the power cable you've found and use it to plug the computer in.
+It turns on, and everything works! Your relatives are amazed. Such an easy
+thing to forget! The computer is supposed to work from batteries, but they
+must have been dead.
+
+This computer has a number of different programs: Word processor, spell
+review, calculator, 'mind challenge', 'word zappers', a calendar,
+spreadsheet, graph-drawing program, a database, and an art studio. But
+there's two others that are calling to you: 'BASIC' and 'BASIC Tutor'.
+
+"Remember those games you played on the computer grandma already has?
+You can use this computer with BASIC to make your own! We don't know how
+though, you'll have to learn on your own."
+
+Well, looks like the tutor program is the way to go.
+"""
+
+[[rooms.choices]] 
+description = "Open 'BASIC Tutor' program"
+action = 6
+
+[[rooms]]
+description = """You open up the tutor program, and this is what it says:
+
+'BASIC' is a computer language that was especially designed for student
+use. The commands are relatively simple yet allow you to demonstrate
+control over a computer and achieve sometimes amazing results. BASIC is
+an abbreviation for Beginners All Purpose Symbolic Instruction Code. The
+power of BASIC has grown tremendously since its early implementations.
+Today students can program in advanced versions that offer almost as much
+structure and functionality as the most accepted "professional"
+programming languages. Learning to program in BASIC using this computer
+will prepare you for programming in all implementations of BASIC since the
+commands are similar and the only differences are in some logic
+structures.
+
+PRESS ENTER TO CONTINUE
+"""
+
+[[rooms.choices]] 
+description = "Press the 'enter' key"
+action = 7
+
+[[rooms]]
+description = """The tutor walks you through some more introductory text, explaining how to
+use the little IDE that comes with the computer. It also teaches you one
+of the first things you need to know about BASIC: that every single line
+in a BASIC program has... something.
+
+As a little kid, while working through the tutor, it can be hard to
+remember what you've learned. At the end of each section of the tutor,
+you'll be asked to recall the information from each section.
+
+What is in every single line of a BASIC program?
+"""
+
+[[rooms.choices]] 
+description = "Line numbers"
+action = 9
+
+[[rooms.choices]] 
+description = "Semicolon"
+action = 8
+
+[[rooms]]
+description = """Unfortunately, you've remembered incorrectly. There are some programming
+languages that end every line in a semicolon, like C. Stop trying to skip
+ahead in your childhood, though!
+
+You don't know what C is yet. You will someday...
+"""
+
+[[rooms.choices]] 
+description = "Try again"
+action = 7
+
+[[rooms]]
+description = """
+Correct! Line numbers. But you're not entirely sure what that means,
+exactly: you don't know any commands yet, so you can't actually write any
+BASIC code yet.
+
+"PRESS ENTER TO CONTINUE," says the tutor.
+"""
+
+[[rooms.choices]] 
+description = "Press the 'enter' key"
+action = 10
+
+[[rooms]]
+description = """Next, you learn about 'comments'. Comments are a way for programmers to
+leave notes to themselves, so when they read their programs at a later
+time, they can remember what the tricky bits do. Computers completely
+ignore lines with comments.
+
+What syntax does BASIC use for comments?
+"""
+
+[[rooms.choices]] 
+description = "COM (for 'comment')"
+action = 11
+
+[[rooms.choices]] 
+description = "REM (for 'remark')"
+action = 12
+
+[[rooms]]
+description = """Unfortunately, that's not correct. You'd think that COM might make sense,
+but sometimes, programming is tough. This particular mnemonic isn't
+accurate.
+"""
+
+[[rooms.choices]] 
+description = "Try again"
+action = 10
+
+[[rooms]]
+description = """That's right, it's REM, for 'REMark'. You now know enough
+to understand a simple BASIC program:
+
+10 REM This is a comment for later
+
+There's the line number, 10. You're still not totally sure why you need
+them, but the tutor says you do.
+
+"PRESS ENTER TO CONTINUE," says the tutor.
+"""
+
+[[rooms.choices]] 
+description = "Press the 'enter' key"
+action = 13
+
+[[rooms]]
+description = """Comments aren't very interesting to you right now, though. Years later,
+they will be, but at the moment, you're still not sure why they're there.
+
+Anyway, the next section is about displaying stuff to the people who run
+your program. What's the keyword for that, again?
+"""
+
+[[rooms.choices]] 
+description = "PUTS (for 'put string')"
+action = 14
+
+[[rooms.choices]] 
+description = "PRINT"
+action = 15
+
+[[rooms]]
+description = """Sorry, it's not PUTS. Years later, you'll learn Ruby, which does use
+'puts'. But you're skipping ahead again!
+"""
+
+[[rooms.choices]] 
+description = "Try again"
+action = 13
+
+[[rooms]]
+description = """
+Correct! PRINT is the keyword that lets you print stuff out.
+
+10 PRINT "HELLO, WORLD!"
+
+"PRESS ENTER TO CONTINUE," says the tutor.
+"""
+
+[[rooms.choices]] 
+description = "Press the 'enter' key"
+action = 16
+
+[[rooms]]
+description = """Showing stuff to the user is fun, but being able to understand what
+they're typing is important, too. Interactive programs are more fun than
+non-interactive ones.
+
+How do you get user input in BASIC?
+"""
+
+[[rooms.choices]] 
+description = "GETS (for 'get string')"
+action = 17
+
+[[rooms.choices]] 
+description = "INPUT"
+action = 18
+
+[[rooms]]
+description = "That's not true, sadly. Try again?"
+
+[[rooms.choices]] 
+description = "Try again"
+action = 16
+
+[[rooms]]
+description = """Correct! You also need a $ for string variables. Here's a sample program
+showing INPUT:
+
+10 INPUT "YOUR NAME PLEASE:";NAME$
+20 PRINT NAME$
+
+"PRESS ENTER TO CONTINUE," says the tutor.
+"""
+
+[[rooms.choices]] 
+description = "Press the 'enter' key"
+action = 19
+
+[[rooms]]
+description = """The next section is about a topic that something that you don't fully
+understand the importance of at first. It's called 'GOTO', and it's a way
+to make your program execute other parts of your program. Or something.
+
+Is GOTO a good thing, or a bad thing?
+"""
+
+[[rooms.choices]] 
+description = "Harmful"
+action = 20
+
+[[rooms.choices]] 
+description = "Totally fine"
+action = 21
+
+[[rooms]]
+description = """Okay, so here's the thing. Yes, Dijkstra said that GOTO is terrible. Yes,
+he's not wrong. Exactly.
+
+I mean, you're a kid. This isn't about building reliable programs, and
+besides, at this time, the _reason_ that Dijkstra wrote his essay was that
+people did consider GOTO a good idea. So choosing this answer is kind of a
+cheat. We haven't gotten there yet.
+"""
+
+[[rooms.choices]] 
+description = "Try again"
+action = 19
+
+[[rooms]]
+description = """GOTO may not be great in 2016, but in 1991, it's fine. Good enough for
+you, anyway. GOTO looks like this:
+
+10 GOTO 40
+20 PRINT "GOODBYE"
+30 END
+40 PRINT "HELLO"
+50 GOTO 20
+
+"Understanding a program containing many GOTOs can be a very complicated
+and difficult process.
+
+"PRESS ENTER TO CONTINUE," says the tutor.
+"""
+
+[[rooms.choices]] 
+description = "Press the 'enter' key"
+action = 22
+
+[[rooms]]
+description = """One critical thing for programs is being able to make decisions. In other
+words, you want to be able to do things like "is the input the user typed
+in correct?" and then do something if it's right, and something else if
+it's wrong.
+
+A large number of languages use two keywords for this, IF and ELSE. So
+does BASIC, but does it also need an END keyword?
+"""
+
+[[rooms.choices]] 
+description = "BASIC uses END"
+action = 23
+
+[[rooms.choices]] 
+description = "No, it does not use END"
+action = 24
+
+[[rooms]]
+description = "Wrong! Sorry about that. Maybe try again?"
+
+[[rooms.choices]] 
+description = "Try again"
+action = 22
+
+[[rooms]]
+description = """That's right! In BASIC, things all fit on one line, so you don't need an
+END. In languages that support multi-line IFs, END is much more useful.
+
+You see an example program in the documentation:
+
+10 INPUT "YOUR AGE PLEASE ";AGE
+20 IF AGE > 15 THEN 50
+30 PRINT "YOU ARE IN THE COMPUTER GENERATION!"
+40 GOTO 60
+50 PRINT "SORRY, YOU'RE TOO OLD FOR COMPUTERS!"
+60 END
+
+That's... a bit mean. Your uncle is a great programmer, but is certainly
+older than 15...
+
+"PRESS ENTER TO CONTINUE," says the tutor.
+"""
+
+[[rooms.choices]] 
+description = "Press the 'enter' key"
+action = 25
+
+[[rooms]]
+description = """Programs need to manipulate data. You learn from the tutorial that
+"variables" are the way that you do this kind of thing.
+
+But how do you define a variable in BASIC?
+"""
+
+[[rooms.choices]] 
+description = "X = 1"
+action = 26
+
+[[rooms.choices]] 
+description = "LET X = 1"
+action = 26
+
+[[rooms]]
+description = """... actually, both forms work! LET is optional; it's there because older
+versions of BASIC required it, but today, the equals sign is enough for
+BASIC to know that you are assigning something.
+
+10 LET N$="PETER"
+20 X=X+1
+
+The $ appears at the end of the name to indicate that N is a string. You
+don't need to make these kinds of annotations, but if you do, they can
+help make programs easier to understand.
+
+"CONGRATULATIONS. YOU NOW KNOW THE BASICS OF BASIC.
+
+"PRESS ENTER TO QUIT," says the tutor.
+"""
+
+[[rooms.choices]] 
+description = "Press the 'enter' key"
 action = "win"
-requires = "weird key"
